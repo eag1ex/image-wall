@@ -1,0 +1,32 @@
+{
+  "name": "image-wall",
+  "version": "0.0.1",
+  "authors": [
+    "Michael Polak"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "overrides": {
+    "bootstrap-sass": {
+      "ignore": true
+    },
+    "jquery": {
+      "ignore": false
+    }
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "angular": "1.6.3",
+    "bootstrap": "v4.0.0-alpha.6",
+    "angular-ui-router": "0.4.2"
+  },
+  "resolutions": {
+    "bootstrap": "v4.0.0-alpha.6"
+  }
+}

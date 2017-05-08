@@ -1,0 +1,22 @@
+//// imports
+// include animation before app loads
+@import '_mixins';
+// @layout.scss
+//----------------------------
+//----------------------------
+
+
+.layout-container {
+    text-align: center;
+}
+
+.image-wrap{
+    max-width: 100px;
+    height: auto;
+    my-image{
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+}

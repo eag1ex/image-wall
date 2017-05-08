@@ -1,0 +1,42 @@
+{
+    "name": "image-wall",
+    "version": "0.0.1",
+    "description": "prototype",
+    "scripts": {
+        "postinstall": "bower install",
+        "start": "gulp"
+    },
+    "keywords": [],
+    "author": "Michael Polak",
+    "url": "http://creativeatwork.net",
+    "license": "ISC",
+    "engine": {
+        "node": ">=6.9.4",
+        "node-sass": "^3.10.10"
+    },
+    "os": ["darwin", "linux", "win32"],
+    "repository": {
+        "type": "git",
+        "url": "#"
+    },
+
+    "devDependencies": {
+        "browser-sync": "^2.18.8",
+        "cors": "^2.8.3",
+        "del": "^1.2.0",
+        "gulp": "^3.8.11",
+        "gulp-angular-templatecache": "^2.0.0",
+        "gulp-csso": "^1.0.0",
+        "gulp-htmlmin": "^3.0.0",
+        "gulp-inject": "^4.2.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-sass": "^2.0.1",
+        "gulp-sourcemaps": "^2.4.1",
+        "gulp-typescript": "^3.1.6",
+        "gulp-uglify": "^2.1.2",
+        "gulp-util": "^3.0.8",
+        "path-exists": "^3.0.0",
+        "typescript": "^2.2.2",
+        "wiredep": "^4.0.0"
+    }
+}
