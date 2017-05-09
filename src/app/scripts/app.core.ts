@@ -9,6 +9,8 @@ module app {
 
   appRun['$inject'] = ['$rootScope','$timeout'];
   function appRun($rootScope,$timeout) {
+       $rootScope.angularLoader=0;
+
         $rootScope.$on("$stateChangeSuccess", function(){       
           console.info('angular Loaded');
         });     

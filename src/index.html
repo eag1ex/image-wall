@@ -13,8 +13,12 @@
 </head>
 
 <body>
-    <div ui-view></div>
-
+    <div ui-view ng-class='{"ng-show ng-animate":$root.angularLoader==1}' class='angular-app-include'></div>
+    
+    <div id="preloader" class="overlay-loader" class='fade-out' ng-hide="$root.angularLoader==1" ng-class='{"ng-hide ng-animate":$root.angularLoader==1}'>
+        <div class="loader-background"></div>
+        <img class="loader-icon spinning-cog " src="./dist/styles/cog09.svg" data-cog="cog09">
+    </div>
 
     <!-- bower:js -->
     <!-- endbower -->

@@ -5,7 +5,6 @@ module app.image {
     public $onChanges: any
     public imgDATA: any
     public hotImage: any;
-    public dataCheck: any;
     static $inject: Array<string> = ['$scope', '$element', '$document', '$timeout', '$q', 'mockData'];
     /* @ngInject */
     constructor(
@@ -17,27 +16,38 @@ module app.image {
       public mockData: any
     ) {
 
-      this.hotImage = false;
+      this.hotImage = null;
 
       this.$onChanges = (changes) => {
         //reset
-        element.find('img').css({ opacity: 1 });
-        this.hotImage = false;
+        //element.find('img').css({ opacity: 1 });
+        this.hotImage = null;
 
         if (changes.imgdata) {
           if (!angular.isDefined(changes.imgdata.currentValue)) return;
           var imageData = changes.imgdata.currentValue;
           var matchindex = changes.imgdata.currentValue.matchindex;
-
-          this.dataCheck = imageData;
+          this.imgDATA = imageData.item;
 
           // once the images are loaded we expect to recive a matching index
-          if (matchindex == true) {
-            this.hotImage = true;
-            element.find('img').css({ opacity: 0.3 })
+          if (matchindex !== null && matchindex<=8) {
+
+            var path = 'dist/images'
+            var hotBoxImages = [
+              path+'/box1/be-kind_01_01.gif',
+              path+'/box1/be-kind_01_02.gif',
+              path+'/box1/be-kind_01_03.gif',
+              path+'/box1/be-kind_01_04.gif',
+              path+'/box2/your-logo_01.gif',
+              path+'/box2/your-logo_02.gif',
+              path+'/box2/your-logo_03.gif',
+              path+'/box2/your-logo_04.gif'
+            ]
+
+            this.hotImage = hotBoxImages[matchindex];
           }
 
-          this.imgDATA = imageData.item;
+          
           if (imageData.totalinx == imageData.inx) {
 
             /**

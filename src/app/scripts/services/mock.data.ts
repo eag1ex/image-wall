@@ -24,7 +24,7 @@ module app.mockData {
                 format: "json",
                 nojsoncallback: 1,
                 orientation: "square",
-                per_page:200
+                per_page:250
             }
 
             return this.$http({
