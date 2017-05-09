@@ -1,9 +1,14 @@
 
 <div class="container-fluid layout-container">
     <div class="d-flex flex-wrap" id="flex-wrap">
-        <div ng-repeat="item in layout.imageData track by $index" class="image-wrap">
+
+        <div ng-show="layout.imageData==false">
+            {{layout.imageDataErrorMessage}}
+        </div>
+
+        <div ng-repeat="item in layout.imageData track by $index" class="image-wrap" ng-if="layout.imageData!==false">
             <my-image imgdata="{item:item,totalinx:layout.imageData.length-1, inx:$index, 
-            matchindex:layout.imageModels[$index] }" ></my-image>
+            matchindex:layout.imageModels[$index] }"></my-image>
         </div>
     </div>
 

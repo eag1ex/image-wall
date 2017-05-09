@@ -21,6 +21,9 @@ module app.main {
         }, (error) => {
           //   console.log('category data not available', error)
         })
+        window.onload=()=>{
+          console.log('images loaded!')
+        }
     }
 
   }

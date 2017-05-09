@@ -33,10 +33,14 @@ module app.mockData {
                 url: 'https://api.flickr.com/services/rest'
 
             }).then((response) => {
-                console.log('response.data',response.data)
-                return response.data;
-            }, (response) => {
-                alert('api error, api key expired');
+                if (response.data.stat=='ok'){
+                     return response.data;
+                }else{
+                    return false;
+                }              
+               
+            }, (response) => { 
+                //alert('api error, api key expired');
                 console.log('response',response)
                 return response;
             });
