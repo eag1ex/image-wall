@@ -1,10 +1,11 @@
 module app.image {
   'use strict';
   export class ImageController {
-    public delivery: any;
     public imgdata: any;
     public $onChanges: any
     public imgDATA: any
+    public hotImage: any;
+    public dataCheck: any;
     static $inject: Array<string> = ['$scope', '$element', '$document', '$timeout', '$q', 'mockData'];
     /* @ngInject */
     constructor(
@@ -15,10 +16,27 @@ module app.image {
       public q: any,
       public mockData: any
     ) {
-      var imageData;
+
+      this.hotImage = false;
+
       this.$onChanges = (changes) => {
-        if (angular.isDefined(changes.imgdata.currentValue)) {
-          imageData = changes.imgdata.currentValue;
+        //reset
+        element.find('img').css({ opacity: 1 });
+        this.hotImage = false;
+
+        if (changes.imgdata) {
+          if (!angular.isDefined(changes.imgdata.currentValue)) return;
+          var imageData = changes.imgdata.currentValue;
+          var matchindex = changes.imgdata.currentValue.matchindex;
+
+          this.dataCheck = imageData;
+
+          // once the images are loaded we expect to recive a matching index
+          if (matchindex == true) {
+            this.hotImage = true;
+            element.find('img').css({ opacity: 0.3 })
+          }
+
           this.imgDATA = imageData.item;
           if (imageData.totalinx == imageData.inx) {
 
@@ -31,42 +49,16 @@ module app.image {
               scope.$emit("imagesLoaded", { data: true });
             }, 1000)
           }
-        }
+        }//changes.imgdata
 
-        // once the images are loaded we expect to recive a matching index
-        // to loop throught
-
-        if (angular.isDefined(changes.hotSpotImgs.currentValue)) {
-          if (changes.hotSpotImgs.currentValue == null) return;
-
-          // box one
-          var inxData = changes.hotSpotImgs.currentValue;
-          for (var i = 0; i < inxData.one.lenght; i++) {
-            if (inxData.one[i] == imageData.inx) {
-              console.log('we have mathich index!', element)
-              return;
-            }
-          }
-          // box two
-          for (var i = 0; i < inxData.two.lenght; i++) {
-            if (inxData.two[i] == imageData.inx) {
-              console.log('we have mathich index!', element)
-              return;
-            }
-          }
-
-        }
-
-
-      }
+      }//$onChanges
 
     }
   }
 
   class ImageComponent {
     bindings = {
-      imgdata: "<",
-      matchinx: "<"
+      imgdata: "<"
     }
     constructor() { }
     restrict = 'E';

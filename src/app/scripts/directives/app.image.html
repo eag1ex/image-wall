@@ -1,2 +1,4 @@
 
-<img ng-src="{{vm.imgDATA.url_s}}" alt="{{vm.imgDATA.title}}"/>
+<img ng-src="{{vm.imgDATA.url_s}}" alt="{{vm.imgDATA.title}}" ng-hide="vm.hotImage==true"/>
+{{vm.dataCheck.inx}}
+<div ng-show="vm.hotImage==true" >hello im hot</div>
