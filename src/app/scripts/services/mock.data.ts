@@ -15,7 +15,7 @@ module app.mockData {
         private imageList() {
             var para = {
                 method: "flickr.photos.search",
-                api_key: "7fd7aade6d970b8272ebde7c6753c258",
+                api_key: "6b3ba270b79a1093af80e49af575df5e",                            
                 text: "face portrait people smile",
                 tags:"portrait,mug",
                 content_type: 1,
@@ -24,6 +24,7 @@ module app.mockData {
                 format: "json",
                 nojsoncallback: 1,
                 orientation: "square",
+                per_page:200
             }
 
             return this.$http({
@@ -32,9 +33,11 @@ module app.mockData {
                 url: 'https://api.flickr.com/services/rest'
 
             }).then((response) => {
+                console.log('response.data',response.data)
                 return response.data;
             }, (response) => {
-                console.log('error')
+                alert('api error, api key expired');
+                console.log('response',response)
                 return response;
             });
         }
