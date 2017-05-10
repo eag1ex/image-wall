@@ -104,7 +104,7 @@ module app.image {
 
 function TEMPLATE(){
   var output=`
-<img ng-src="{{vm.imgDATA.url_s}}" alt="{{vm.imgDATA.title}}" ng-show="vm.hotImage==null"/>
+<img ng-src="{{vm.imgDATA.url_s}}" ng-show="vm.hotImage==null"/>
 <span class='hotImage' style='background-image:url("{{vm.hotImage}}")' ng-show="vm.hotImage!==null"></span>
 `;
 return output;;
