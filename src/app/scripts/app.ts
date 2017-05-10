@@ -1,5 +1,6 @@
 //avoid compailer error messages
 declare var angular: any;
+declare var WINDOW_PRELOADED:any;
 declare var jquery:any;
 declare var $:any;
 module app {

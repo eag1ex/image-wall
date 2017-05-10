@@ -7,6 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="#" />
+
     <title>Image Wall</title>
     <!-- inject:css -->
     <!-- endinject -->
@@ -14,7 +15,7 @@
 
 <body>
     <div ui-view ng-class='{"ng-show ng-animate":$root.angularLoader==1}' class='angular-app-include'></div>
-    
+
     <div id="preloader" class="overlay-loader" class='fade-out' ng-hide="$root.angularLoader==1" ng-class='{"ng-hide ng-animate":$root.angularLoader==1}'>
         <div class="loader-background"></div>
         <img class="loader-icon spinning-cog " src="./dist/styles/cog09.svg" data-cog="cog09">
@@ -31,6 +32,7 @@
 
     <!-- inject:js -->
     <!-- endinject -->
+   
 </body>
 
 </html>

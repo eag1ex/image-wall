@@ -13,6 +13,8 @@ module app.image {
      *  
      *  there are 8 matching indexes, 4 indexes per hotBox
      * 
+     * added fixed size to avoid image stacking
+     * 
      */
 
     /* @ngInject */
@@ -37,6 +39,16 @@ module app.image {
 
           //  image url data received here
           this.imgDATA = imageData.item;
+          /**
+           *  PRELOAD IMAGE
+           */
+          var imageObj = new Image();
+          imageObj.src = this.imgDATA.url_s;
+
+          // set image initial size
+          // to avoid image stacking
+          element.find('img').width(60);
+          element.find('img').height(60);
 
           // once the images are loaded we expect to recive a matching index
           if (matchindex !== null && matchindex <= 8) {
@@ -55,26 +67,22 @@ module app.image {
             this.hotImage = hotBoxImages[matchindex];
           }
 
+
           if (imageData.totalinx == imageData.inx) {
+
 
             /**
              *  delay required for images to fully load
              *  once last image is loaded we emit signal to layoutController to start initiating/defind center blocks
              */
-
             element.find('img')[0].onload = () => {
-
               scope.$emit("imagesLoaded", { data: true });
               console.info('last image loaded!')
-
             };
-
             // even if error we dont want this to hang
             element.find('img')[0].onerror = () => {
-
               scope.$emit("imagesLoaded", { data: true });
               console.info('last image loaded!')
-
             }
           }
         }//changes.imgdata
@@ -104,7 +112,7 @@ module app.image {
 <img ng-src="{{vm.imgDATA.url_s}}" ng-show="vm.hotImage==null"/>
 <span class='hotImage' style='background-image:url("{{vm.hotImage}}")' ng-show="vm.hotImage!==null"></span>
 `;
-    return output;;
+    return output;
   }
 
 

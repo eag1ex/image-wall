@@ -5,6 +5,7 @@ module app.layout {
     static $inject: Array<string> = ['$scope', 'mockData', "$timeout", "$rootScope"];
     public imageData: any;
     public imageDataErrorMessage: any;
+    public wallLoaded: any;
     public hotSpotImgs: any;
     public imageModels: any;
     constructor(public scope: any, private mockData: any, public timeout: any, public rootScope: any) {
@@ -40,7 +41,7 @@ module app.layout {
         this.imageDataErrorMessage = "connection error, no internet? " + error;
         console.log('connection error, no internet?', error);
       })
-
+      this.wallLoaded = false;
       this.imageModels = {}
       this.hotSpot();
     }
@@ -57,7 +58,8 @@ module app.layout {
          */
 
         var wrapWidth = $('#flex-wrap').width();
-        var imgWidth = $('#flex-wrap').find('img:first').width();
+        var imgWidth = $('#flex-wrap').find('img:first').width() || 60;
+
         wrapWidth = Math.floor(wrapWidth / imgWidth) * imgWidth;
 
         var windowHeight = $(window).height();
@@ -83,13 +85,13 @@ module app.layout {
         })
 
         angular.forEach(imgs, (elm, inx) => {
+
           var elmX = $(elm).offset().left;
           var elmY = $(elm).offset().top;
 
           if (elmX >= imageHot_x && elmY >= imageHot_y && middleMatch == false) {
 
             this.scope.$apply(() => {
-
               var offset = image_per_row;
 
               // setting box 1
@@ -129,20 +131,11 @@ module app.layout {
 
       var imagesLoaded = false;
       this.scope.$on("imagesLoaded", (evt, data) => {
-        if (imagesLoaded == false) {        
-            imagesLoaded = true;
+        if (imagesLoaded == false) {
+          $(window).resize();
+          imagesLoaded = true;
         }
       });
- 
-      var _t = this;
-      var priorityCheck = setInterval( ()=> {
-        if (_t.rootScope.winLoaded== true && imagesLoaded==true) {
-          findMiddle();
-          console.info('Display Wall!')
-          clearInterval(priorityCheck);
-        }
-      }, 200);
-
 
       $(window).on('resize', () => {
         findMiddle();

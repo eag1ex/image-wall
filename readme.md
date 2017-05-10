@@ -94,6 +94,7 @@ $/ npm install
 - If the API KEY expires, please inform me and i will supply new one.
 - Validation messages on API ERROR.
 - Integraded preloader to wait until images are loaded, and then the centering can be properly aligned.
+- added fixed size to images to avoid image stacking.
 ***
 
 ###### To be completed ?

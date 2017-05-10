@@ -44,6 +44,12 @@ body{
     max-width: 60px;
     height: auto;
     my-image{
+        img{
+            // this will fix the problem of image stacking
+            width: 60px;
+            height: 60px;
+            display: block;
+        }
         span.hotImage{
             background-repeat:no-repeat;
             background-position: center center;
