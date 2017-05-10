@@ -7,9 +7,15 @@ module app {
     .config(configureStates)
     .run(appRun)
 
-  appRun['$inject'] = ['$rootScope','$timeout'];
-  function appRun($rootScope,$timeout) {
+  appRun['$inject'] = ['$rootScope','$timeout','$window'];
+  function appRun($rootScope,$timeout, $window) {
        $rootScope.angularLoader=0;
+       $rootScope.winLoaded = false;
+       
+       // stage for image loading
+       $window.onload = function(){
+          $rootScope.winLoaded=true;
+       }
 
         $rootScope.$on("$stateChangeSuccess", function(){       
           console.info('angular Loaded');

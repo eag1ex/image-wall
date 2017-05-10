@@ -15,7 +15,6 @@ module app.image {
      * 
      */
 
-
     /* @ngInject */
     constructor(
       public scope: any,
@@ -65,19 +64,17 @@ module app.image {
 
             element.find('img')[0].onload = () => {
 
-              timeout(() => {
-                scope.$emit("imagesLoaded", { data: true });
-                console.info('last image loaded!')
-              }, 500)
+              scope.$emit("imagesLoaded", { data: true });
+              console.info('last image loaded!')
+
             };
 
             // even if error we dont want this to hang
             element.find('img')[0].onerror = () => {
 
-              timeout(() => {
-                scope.$emit("imagesLoaded", { data: true });
-                console.info('last image loaded!')
-              }, 500)
+              scope.$emit("imagesLoaded", { data: true });
+              console.info('last image loaded!')
+
             }
           }
         }//changes.imgdata
@@ -102,13 +99,13 @@ module app.image {
     .module('app.image').component('myImage', new ImageComponent());
 
 
-function TEMPLATE(){
-  var output=`
+  function TEMPLATE() {
+    var output = `
 <img ng-src="{{vm.imgDATA.url_s}}" ng-show="vm.hotImage==null"/>
 <span class='hotImage' style='background-image:url("{{vm.hotImage}}")' ng-show="vm.hotImage!==null"></span>
 `;
-return output;;
-}
+    return output;;
+  }
 
 
 

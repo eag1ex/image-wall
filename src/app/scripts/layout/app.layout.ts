@@ -126,15 +126,23 @@ module app.layout {
       // initialize on load
       // wait for signal, once all images are loaded then lookup center
       // also need to wait once dom has loaded, since there are many images!!
-      var loaded = false;
-      window.onload = () => {
-        this.scope.$on("imagesLoaded", (evt, data) => {
-          if (!loaded) {
-            findMiddle();
-            loaded = true;
-          }
-        });
-      }
+
+      var imagesLoaded = false;
+      this.scope.$on("imagesLoaded", (evt, data) => {
+        if (imagesLoaded == false) {        
+            imagesLoaded = true;
+        }
+      });
+ 
+      var _t = this;
+      var priorityCheck = setInterval( ()=> {
+        if (_t.rootScope.winLoaded== true && imagesLoaded==true) {
+          findMiddle();
+          console.info('Display Wall!')
+          clearInterval(priorityCheck);
+        }
+      }, 200);
+
 
       $(window).on('resize', () => {
         findMiddle();
