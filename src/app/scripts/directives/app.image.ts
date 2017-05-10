@@ -9,7 +9,7 @@ module app.image {
 
     /**
      * "myImage" COMPONENT decides what to load on canvas,  based on data received
-     *  "hotBoxImages" make up the centered hot spot images displayed on canvas
+     *  "hotBoxImages" make up the center displayed on canvas
      *  
      *  there are 8 matching indexes, 4 indexes per hotBox
      * 
@@ -60,7 +60,7 @@ module app.image {
 
             /**
              *  delay required for images to fully load
-             * once last image is loaded we send signal to start initiating to defind center blocks
+             *  once last image is loaded we emit signal to layoutController to start initiating/defind center blocks
              */
 
             element.find('img')[0].onload = () => {
@@ -71,6 +71,7 @@ module app.image {
               }, 500)
             };
 
+            // even if error we dont want this to hang
             element.find('img')[0].onerror = () => {
 
               timeout(() => {
@@ -91,7 +92,7 @@ module app.image {
     constructor() { }
     restrict = 'E';
     controllerAs = "vm";
-    templateUrl = 'dist/js/app.image.html';
+    template = TEMPLATE();
     controller = ImageController;
   }
 
@@ -99,4 +100,16 @@ module app.image {
     .module('app.image', []);
   angular
     .module('app.image').component('myImage', new ImageComponent());
+
+
+function TEMPLATE(){
+  var output=`
+<img ng-src="{{vm.imgDATA.url_s}}" alt="{{vm.imgDATA.title}}" ng-show="vm.hotImage==null"/>
+<span class='hotImage' style='background-image:url("{{vm.hotImage}}")' ng-show="vm.hotImage!==null"></span>
+`;
+return output;;
+}
+
+
+
 }

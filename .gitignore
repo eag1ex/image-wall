@@ -22,6 +22,7 @@ tmp
 history
 public/bower_components
 
+
 # Ignore Test reporters
 ###################
 **/test/coverage

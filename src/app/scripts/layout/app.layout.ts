@@ -9,6 +9,12 @@ module app.layout {
     public imageModels: any;
     constructor(public scope: any, private mockData: any, public timeout: any, public rootScope: any) {
 
+      /**
+       * 
+       * DATA is send to "myimage" component, and decides how to handle the image.
+       * 
+       */
+
 
       mockData.data().then((data) => {
         if (data == false) {
@@ -46,8 +52,8 @@ module app.layout {
       var findMiddle = () => {
 
         /**
-         * logic for definding canval center.
-         * we defind the center and offset positions using index within 1 loop
+         * logic for definding canvas center.
+         * we defind the center and offset positions using index within 1 loop cycle.
          */
 
         var wrapWidth = $('#flex-wrap').width();
@@ -70,7 +76,7 @@ module app.layout {
         var imgs = $('#flex-wrap').find('img');
 
         /**
-         * we need to generate imageModels index first or it wont update values in order
+         * we need to generate imageModels(myimage) index first or it wont update values in order
          */
         angular.forEach(imgs, (elm, inx) => {
           this.imageModels[inx] = null;
