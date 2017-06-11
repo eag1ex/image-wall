@@ -2,13 +2,13 @@ module app.layout {
   'use strict';
 
   export class LayoutController {
-    static $inject: Array<string> = ['$scope', 'mockData', "$timeout", "$rootScope"];
+    static $inject: Array<string> = ['$scope', 'myMockData', "$timeout", "$rootScope"];
     public imageData: any;
     public imageDataErrorMessage: any;
     public wallLoaded: any;
     public hotSpotImgs: any;
     public imageModels: any;
-    constructor(public scope: any, private mockData: any, public timeout: any, public rootScope: any) {
+    constructor(public scope: any, private myMockData: any, public timeout: any, public rootScope: any) {
 
       /**
        * 
@@ -17,7 +17,7 @@ module app.layout {
        */
 
 
-      mockData.data().then((data) => {
+      myMockData.data().then((data) => {
         if (data == false) {
           this.imageData = false;
           this.imageDataErrorMessage = "Invalid API key, or expired!";

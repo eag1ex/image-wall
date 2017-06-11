@@ -5,7 +5,7 @@ module app.image {
     public $onChanges: any
     public imgDATA: any
     public hotImage: any;
-    static $inject: Array<string> = ['$scope', '$element', '$document', '$timeout', '$q', 'mockData'];
+    static $inject: Array<string> = ['$scope', '$element', '$document', '$timeout', '$q', 'myMockData'];
 
     /**
      * "myImage" COMPONENT decides what to load on canvas,  based on data received

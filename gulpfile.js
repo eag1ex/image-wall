@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-rename = require("gulp-rename");
+var rename = require("gulp-rename");
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
 var wiredep = require('wiredep').stream;
@@ -15,10 +15,18 @@ var gutil = require('gulp-util');
 var minifyHtml = require('gulp-htmlmin');
 var angularTemplatecache = require('gulp-angular-templatecache');
 
+////// list bower and npm packages
+//var bower_npm_pkg = require('./list.bower.debs.js')
+
+
 var port = process.env.PORT || 3000;
 
 var app_path = './src/app';
 var dist_path = './public/dist'
+
+gulp.task('bowernpm', function (done) {
+    // bower_npm_pkg();
+});
 
 
 gulp.task('clean', function (done) {
@@ -59,15 +67,50 @@ gulp.task('styles-new', function () {
     };
 
 
-    return gulp.src(app_path + '/scss/main.scss')
+    var obj = gulp.src(app_path + '/scss/main.scss')
         .pipe(wiredep())
         .pipe(inject(injectGlobalFiles, injectGlobalOptions))
         .pipe(inject(injectAppFiles, injectAppOptions))
-        .pipe(sass())
+
+
+    toConsole(obj);
+
+    obj.pipe(sass())
         .pipe(csso())
         .pipe(gulp.dest(dist_path + '/styles'));
 
 });
+
+
+
+function toConsole(obj) {
+    var output = [];
+    obj.on('data', function (chunk) {
+        // regex validatore tester 
+        // https://regex101.com/r/cB0kB8/1
+
+        var contents = chunk.contents.toString().trim();
+        var bufLength = process.stdout.columns;
+        var hr = '\n\n' + Array(bufLength).join("_") + '\n\n'
+        if (contents.length > 1) {
+
+            var body = chunk.path + '\n' + contents + '\n';
+            // process.stdout.write(chunk.path + '\n' + contents + '\n');           
+            // var re = /(<|%3C)style[\s\S]*?(>|%3E)[\s\S]*?(<|%3C)(\/|%2F)style[\s\S]*?(>|%3E)/gi;
+            var re = /(['"])((\\\1|.)*?)\1/;
+            var match = body.match(/(['"])((\\\1|.)*?)\1/gi);
+            
+
+            for (var i = 0; i < match.length; i++) {
+                output.push(match[i].replace(/"/g, ""));
+            }
+        }
+    });
+    return output;
+}
+
+
+
 
 gulp.task('images', function () {
 
@@ -154,6 +197,42 @@ gulp.task('wiredep', ['styles-new', 'typescript', 'angular-templates', 'images']
         .pipe(inject(injectFiles, injectOptions))
         .pipe(gulp.dest('./public'))
 });
+
+
+gulp.task('wiredep-test', ['styles-new', 'typescript', 'angular-templates', 'images'], function () {
+
+    var injectFiles = gulp.src([dist_path + '/styles/*.css',
+    dist_path + '/js/*.js',
+    '!' + dist_path + '/js/app.js',
+    '!' + dist_path + '/js/app.core.js'
+    ]);
+
+    var injectOptions = {
+        addRootSlash: false,
+        ignorePath: ['src', 'public']
+    };
+    // js files only
+    var wireupConf = {
+        'ignorePath': '../public/',
+        exclude: ['sass-bem', 'bootstrap-sass'],
+        directory: './public/bower_components',
+    };
+
+    var toConsole = gulp.src('src/index.html')
+        .pipe(wiredep(wireupConf))
+        .pipe(inject(gulp.src(dist_path + '/js/app.js', { read: false }), { starttag: '<!-- inject:app:{{ext}} -->', addRootSlash: false, ignorePath: ['src', 'public'] }))
+
+        .pipe(inject(gulp.src(dist_path + '/js/app.core.js', { read: false }), { starttag: '<!-- inject:appcore:{{ext}} -->', addRootSlash: false, ignorePath: ['src', 'public'] }))
+
+        .pipe(inject(injectFiles, injectOptions))
+        .pipe(gulp.dest('./public'), function (data) { })
+
+
+});
+
+
+
+
 
 gulp.task('all', ['clean'], function () {
     gulp.start('wiredep', function () {
