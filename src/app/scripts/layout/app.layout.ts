@@ -33,6 +33,7 @@ module app.layout {
         } else {
           this.imageData = data.photos.photo;
           console.info('flickr data found');
+          console.log('this.imageData',this.imageData)
         }
 
       }, (error) => {

@@ -33,6 +33,13 @@ module app.mockData {
                 url: 'https://api.flickr.com/services/rest'
 
             }).then((response) => {
+
+                /**
+                 * THIS IS NOT A GOOD APPROCHE FOR UNIT TESTING
+                 * SHOULD RETURN DATA SERVICE VIA ANOTHER MANIPULATED SERVICE
+                 */
+
+
                 if (response.data.stat=='ok'){
                      return response.data;
                 }else{
