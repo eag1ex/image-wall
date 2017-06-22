@@ -11,6 +11,7 @@ module app {
     'app.mockData',
     'app.core',
     'app.layout',
-    'app.image'
+    'app.image',
+    'app.buffer'
   ]);
 }

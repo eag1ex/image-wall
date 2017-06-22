@@ -2,13 +2,13 @@ module app.layout {
   'use strict';
 
   export class LayoutController {
-    static $inject: Array<string> = ['$scope', 'myMockData', "$timeout", "$rootScope"];
+    static $inject: Array<string> = ['$scope', 'myMockData', "$timeout", "$rootScope","buffer"];
     public imageData: any;
     public imageDataErrorMessage: any;
     public wallLoaded: any;
     public hotSpotImgs: any;
     public imageModels: any;
-    constructor(public scope: any, private myMockData: any, public timeout: any, public rootScope: any) {
+    constructor(public scope: any, private myMockData: any, public timeout: any, public rootScope: any, public BUFFER) {
 
       /**
        * 
@@ -16,8 +16,8 @@ module app.layout {
        * 
        */
 
-
       myMockData.data().then((data) => {
+
         if (data == false) {
           this.imageData = false;
           this.imageDataErrorMessage = "Invalid API key, or expired!";
@@ -31,17 +31,35 @@ module app.layout {
           console.info('connection error, no internet, or wrong API?');
 
         } else {
-          this.imageData = data.photos.photo;
-          console.info('flickr data found');
-          console.log('this.imageData',this.imageData)
+          
+          
+          var newData = data.photos.photo;
+          var dataToGo=[];
+ 
+          /**
+           * buffer instance
+           */
+           
+          BUFFER.go(newData, (item)=>{
+            dataToGo.push(item); 
+            return dataToGo;
+          },()=>{
+            this.imageData = dataToGo;
+            console.info('buffered images');
+           this.onBufferReady();
+          })
+    
         }
-
       }, (error) => {
         this.imageData = false;
         this.rootScope.angularLoader = 1; // hide preloading icon  
         this.imageDataErrorMessage = "connection error, no internet? " + error;
         console.log('connection error, no internet?', error);
       })
+      
+    }
+
+    onBufferReady(){
       this.wallLoaded = false;
       this.imageModels = {}
       this.hotSpot();
